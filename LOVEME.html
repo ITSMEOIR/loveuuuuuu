@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floral Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Background Photo Styles - No Zoom */
+        .background-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('your-photo.jpg'); /* Replace with your photo path */
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #000;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        /* Overlay to ensure flowers are visible */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .flower {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 6s ease-in-out infinite;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+        }
+
+        .stem {
+            position: absolute;
+            width: 8px;
+            height: 200px;
+            background: linear-gradient(to bottom, #2ecc71, #27ae60);
+            border-radius: 4px;
+            bottom: 0;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+
+        .leaf {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+
+        .leaf-left {
+            bottom: 80px;
+            left: 20px;
+            transform: rotate(-30deg);
+            animation: leafLeft 8s ease-in-out infinite;
+        }
+
+        .leaf-right {
+            bottom: 120px;
+            right: 20px;
+            transform: rotate(30deg);
+            animation: leafRight 7s ease-in-out infinite;
+        }
+
+        @keyframes leafLeft {
+            0%, 100% {
+                transform: rotate(-30deg);
+            }
+            50% {
+                transform: rotate(-40deg);
+            }
+        }
+
+        @keyframes leafRight {
+            0%, 100% {
+                transform: rotate(30deg);
+            }
+            50% {
+                transform: rotate(40deg);
+            }
+        }
+
+        .flower-head {
+            position: absolute;
+            top: 0;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bloom 10s ease-in-out infinite;
+        }
+
+        @keyframes bloom {
+            0%, 100% {
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .petal {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(to bottom, #ff4757, #e84118);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.7);
+        }
+
+        .petal:nth-child(1) {
+            transform: rotate(0deg) translateY(-40px);
+        }
+
+        .petal:nth-child(2) {
+            transform: rotate(45deg) translateY(-40px);
+        }
+
+        .petal:nth-child(3) {
+            transform: rotate(90deg) translateY(-40px);
+        }
+
+        .petal:nth-child(4) {
+            transform: rotate(135deg) translateY(-40px);
+        }
+
+        .petal:nth-child(5) {
+            transform: rotate(180deg) translateY(-40px);
+        }
+
+        .petal:nth-child(6) {
+            transform: rotate(225deg) translateY(-40px);
+        }
+
+        .petal:nth-child(7) {
+            transform: rotate(270deg) translateY(-40px);
+        }
+
+        .petal:nth-child(8) {
+            transform: rotate(315deg) translateY(-40px);
+        }
+
+        .center {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #ff9f1a, #ff7f00);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 159, 26, 0.8);
+            z-index: 10;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+        }
+
+        .message {
+            position: absolute;
+            bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            animation: pulse 3s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message div:first-child {
+            color: #ff4757;
+            text-shadow: 0 0 15px rgba(255, 71, 87, 0.7);
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .message div:nth-child(2) {
+            color: #2ecc71;
+            text-shadow: 0 0 15px rgba(46, 204, 113, 0.7);
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .message div:last-child {
+            color: #ff9f1a;
+            text-shadow: 0 0 15px rgba(255, 159, 26, 0.7);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flower {
+                transform: scale(0.8);
+            }
+            
+            .message {
+                font-size: 1.2rem;
+            }
+            
+            .message div:first-child {
+                font-size: 1.4rem;
+            }
+            
+            .message div:nth-child(2) {
+                font-size: 1.1rem;
+            }
+            
+            .message div:last-child {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flower {
+                transform: scale(0.6);
+            }
+            
+            .message {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+            
+            .message div:first-child {
+                font-size: 1.2rem;
+            }
+            
+            .message div:nth-child(2) {
+                font-size: 0.9rem;
+            }
+            
+            .message div:last-child {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Background Photo Section -->
+        <div class="background-photo" id="backgroundPhoto"></div>
+        <div class="overlay"></div>
+        
+        <div class="flower">
+            <div class="stem"></div>
+            <div class="leaf leaf-left"></div>
+            <div class="leaf leaf-right"></div>
+            <div class="flower-head">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="center"></div>
+            </div>
+        </div>
+        <div class="particles" id="particles"></div>
+        <div class="message">
+            <div>werda ktdbel</div>
+            <div>l werda dyali li ge3ma ktdbel</div>
+            <div>KNBGHEEEEEEEK</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create glowing particles
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                createParticle();
+            }
+            
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 4 + 1;
+                
+                // Random color
+                const colors = [
+                    'rgba(255, 71, 87, 0.8)', // Red
+                    'rgba(46, 204, 113, 0.8)', // Green
+                    'rgba(52, 152, 219, 0.8)', // Blue
+                    'rgba(155, 89, 182, 0.8)', // Purple
+                    'rgba(241, 196, 15, 0.8)'  // Yellow
+                ];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.backgroundColor = color;
+                particle.style.boxShadow = `0 0 ${size * 2}px ${color}`;
+                
+                particlesContainer.appendChild(particle);
+                
+                // Animate particle
+                animateParticle(particle);
+            }
+            
+            function animateParticle(particle) {
+                const duration = Math.random() * 20 + 10; // 10-30 seconds
+                const delay = Math.random() * 5; // 0-5 seconds delay
+                
+                // Random movement
+                const moveX = (Math.random() - 0.5) * 100;
+                const moveY = (Math.random() - 0.5) * 100;
+                
+                // Random opacity changes
+                const keyframes = [
+                    { 
+                        transform: 'translate(0, 0)', 
+                        opacity: 0 
+                    },
+                    { 
+                        transform: `translate(${moveX}px, ${moveY}px)`, 
+                        opacity: 0.8 
+                    },
+                    { 
+                        transform: `translate(${moveX * 2}px, ${moveY * 2}px)`, 
+                        opacity: 0 
+                    }
+                ];
+                
+                const options = {
+                    duration: duration * 1000,
+                    delay: delay * 1000,
+                    iterations: Infinity
+                };
+                
+                particle.animate(keyframes, options);
+            }
+        });
+
+        // Function to change background photo dynamically
+        function changeBackgroundPhoto(imageUrl) {
+            document.getElementById('backgroundPhoto').style.backgroundImage = `url('${imageUrl}')`;
+        }
+    </script>
+</body>
+</html>
